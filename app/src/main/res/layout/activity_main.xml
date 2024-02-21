@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="412dp"
         android:layout_height="104dp"
+        android:background="@color/navbar_background"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +27,7 @@
             android:background="@color/transparent"
             android:contentDescription="button to move to to do list"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/checklist" />
+            app:srcCompat="@drawable/listicon2" />
 
         <ImageButton
             android:id="@+id/imageButtonSettings"
@@ -40,13 +41,14 @@
             android:background="@color/transparent"
             android:contentDescription="button to move to settings"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/cogwheel" />
+            app:srcCompat="@drawable/settings" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/navbar_background"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,20 +60,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="60dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/toggle_button"
             android:text="ToggleButton" />
 
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/light_blue_theme"
             android:text="SAVE" />
     </LinearLayout>
 
@@ -82,6 +86,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="29dp"
         android:text="Subject:"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -118,6 +123,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:text="When is it due?"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintBaseline_toBaselineOf="@id/textViewDueDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
@@ -129,6 +135,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
         android:text="01/04/2024"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintStart_toEndOf="@+id/textViewWhenDue"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
@@ -138,6 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/light_blue_theme"
         android:text="Pick Date"
         app:layout_constraintBaseline_toBaselineOf="@id/textViewWhenDue"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,6 +158,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:text="Priority:"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewWhenDue" />
 
@@ -171,7 +180,8 @@
             android:button="@color/transparent"
             android:drawableBottom="@android:drawable/btn_radio"
             android:text="Low"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_small" />
 
         <RadioButton
             android:id="@+id/radioButtonMedium"
@@ -181,7 +191,8 @@
             android:button="@color/transparent"
             android:drawableBottom="@android:drawable/btn_radio"
             android:text="Medium"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_small" />
 
         <RadioButton
             android:id="@+id/radioButtonHigh"
@@ -190,7 +201,8 @@
             android:button="@color/transparent"
             android:drawableBottom="@android:drawable/btn_radio"
             android:text="High"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_small" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

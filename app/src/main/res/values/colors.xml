@@ -3,5 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="pink_theme">#fe7389</color>
+    <color name="blue_theme">#1b264f</color>
+    <color name="navbar_background">#507dbc</color>
+    <color name="light_blue_theme">#a1c6ea</color>
+    <color name="background_main_activity">#f5f3f5</color>
+    <color name="toggle_button">#dae3e5</color>
+    <color name="system_red">#FF0000</color>
 </resources>

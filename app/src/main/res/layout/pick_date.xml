@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:background="@color/transparent"
             android:text="SAVE"
-            android:textColor="@color/pink_theme" />
+            android:textColor="@color/light_blue_theme" />
 
         <Button
             android:id="@+id/buttonCancelDate"
@@ -32,6 +32,6 @@
             android:layout_weight="1"
             android:background="@color/transparent"
             android:text="CANCEL"
-            android:textColor="@color/pink_theme" />
+            android:textColor="@color/light_blue_theme" />
     </LinearLayout>
 </LinearLayout>
