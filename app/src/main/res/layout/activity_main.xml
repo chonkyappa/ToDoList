@@ -7,22 +7,24 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="412dp"
-        android:layout_height="104dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="93dp"
         android:background="@color/navbar_background"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/imageButtonList"
             android:layout_width="wrap_content"
-            android:layout_height="76dp"
+            android:layout_height="63dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="30dp"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:contentDescription="button to move to to do list"
@@ -31,12 +33,11 @@
 
         <ImageButton
             android:id="@+id/imageButtonSettings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="63dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="15dp"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:contentDescription="button to move to settings"
