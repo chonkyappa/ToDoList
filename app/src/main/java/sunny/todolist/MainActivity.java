@@ -3,6 +3,7 @@ package sunny.todolist;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,7 +27,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements PickDateDialog.SaveDateListener {
 
     Task currentTask;
-test
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ test
         initListButton();
         initPickDateButton();
         initTextChangedEvents();
+        initSaveButton();
 
     }
 
@@ -169,8 +172,52 @@ test
                 }
             }
         });
+    }
 
+    private void initSaveButton() {
+        Button saveButton = findViewById(R.id.buttonSave);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard();
+                boolean wasSuccessful = false;
+                ListDataSource ds = new ListDataSource(MainActivity.this);
+                try {
+                    ds.open();
 
+                    if (currentTask.getTaskID() == -1 ) {
+                        wasSuccessful = ds.insertTask(currentTask);
+                    }
+                    if (wasSuccessful) {
+                        int newId = ds.getLastTaskID();
+                        currentTask.setTaskID(newId);
+
+                    }
+                    else {
+                        wasSuccessful = ds.updateTask(currentTask);
+                    }
+                    ds.close();
+                }
+                catch (Exception e) {
+                    wasSuccessful = false;
+                }
+
+                if (wasSuccessful) {
+                    ToggleButton editToggle = findViewById(R.id.toggleButtonEdit);
+                    editToggle.toggle();
+                    setForEditing(false);
+                }
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        EditText editSubject = findViewById(R.id.editTextSubject);
+        imm.hideSoftInputFromWindow(editSubject.getWindowToken(), 0);
+        EditText editDescription = findViewById(R.id.editTextDescription);
+        imm.hideSoftInputFromWindow(editDescription.getWindowToken(), 0);
     }
 
 }
