@@ -16,22 +16,22 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonSaveDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/transparent"
-            android:text="SAVE"
-            android:textColor="@color/light_blue_theme" />
-
-        <Button
             android:id="@+id/buttonCancelDate"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:background="@color/transparent"
             android:text="CANCEL"
+            android:textColor="@color/light_blue_theme" />
+
+        <Button
+            android:id="@+id/buttonSaveDate"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SELECT"
             android:textColor="@color/light_blue_theme" />
     </LinearLayout>
 </LinearLayout>
