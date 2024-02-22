@@ -46,7 +46,7 @@ public class ToDoSettings extends AppCompatActivity {
                 if (rbSubject.isChecked()) {
                     getSharedPreferences("ToDoListPreferences", Context.MODE_PRIVATE).edit().putString("sortfield", "subject").apply();
                 } else if (rbDate.isChecked()) {
-                    getSharedPreferences("ToDoListPreferences", Context.MODE_PRIVATE).edit().putString("sortfield", "date").apply();
+                    getSharedPreferences("ToDoListPreferences", Context.MODE_PRIVATE).edit().putString("sortfield", "duedate").apply();
                 } else {
                     getSharedPreferences("ToDoListPreferences", Context.MODE_PRIVATE).edit().putString("sortfield", "priority").apply();
                 }
@@ -83,7 +83,7 @@ public class ToDoSettings extends AppCompatActivity {
         // display the checked button for sort by
         if (sortBy.equalsIgnoreCase("subject")) {
             rbSubject.setChecked(true);
-        } else if (sortBy.equalsIgnoreCase("date")) {
+        } else if (sortBy.equalsIgnoreCase("duedate")) {
             rbDate.setChecked(true);
         } else {
             rbPriority.setChecked(true);

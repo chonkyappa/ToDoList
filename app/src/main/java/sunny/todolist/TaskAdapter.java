@@ -1,6 +1,8 @@
 package sunny.todolist;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,10 +74,10 @@ public class TaskAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         TaskViewHolder tvh = (TaskViewHolder) holder;
         tvh.getTaskSubject().setText(taskData.get(position).getSubject());
-        tvh.getTaskDueDate().setText(taskData.get(position).getDueDate().toString());
+        tvh.getTaskDueDate().setText(DateFormat.format("MM/dd/yyyy",taskData.get(position).getDueDate()));
         tvh.getTaskPriority().setText(taskData.get(position).getPriority());
 
         if (isDeleting) {
