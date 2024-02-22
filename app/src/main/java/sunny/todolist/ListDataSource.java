@@ -18,7 +18,7 @@ public class ListDataSource {
     private ListDBHelper dbHelper;
 
     public ListDataSource(Context context) {
-        dbHelper = new ListDbHelper(context);
+        dbHelper = new ListDBHelper(context);
     }
 
     public Task getSpecificTask(int taskID) {
@@ -33,14 +33,14 @@ public class ListDataSource {
             calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
             task.setDueDate(calendar);
             task.setPriority(cursor.getString(4));
-            Boolean isCompleted = false;
-            if(cursor.getString(4) == "true")
-
-            task.setCompleted(cursor.getString(5));
+            if(cursor.getString(5) == "false")
+                task.setCompleted(false);
+            else
+                task.setCompleted(true);
 
             cursor.close();
         }
-        return contact;
+        return task;
     }
 
     public void open() throws SQLException {
@@ -51,27 +51,19 @@ public class ListDataSource {
         dbHelper.close();
     }
 
-    public boolean insertContact(Contact c) {
+    public boolean insertTask(Task t) {
         boolean didSucceed = false;
         try {
             ContentValues initialValues = new ContentValues();
-            if (c.getPicture() != null) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                c.getPicture().compress(Bitmap.CompressFormat.PNG, 100, baos);
-                byte[] photo = baos.toByteArray();
-                initialValues.put("contactphoto", photo);
-            }
-            initialValues.put("contactname", c.getContactName());
-            initialValues.put("streetaddress", c.getStreetAddress());
-            initialValues.put("city",c.getCity());
-            initialValues.put("state",c.getState());
-            initialValues.put("zipcode",c.getZipCode());
-            initialValues.put("phonenumber",c.getPhoneNumber());
-            initialValues.put("cellnumber",c.getCellNumber());
-            initialValues.put("email",c.geteMail());
-            initialValues.put("birthday",String.valueOf(c.getBirthday().getTimeInMillis()));
-
-            didSucceed = database.insert("contact", null, initialValues) > 0;
+            initialValues.put("subject", t.getSubject());
+            initialValues.put("description", t.getDescription());
+            initialValues.put("dueDate", String.valueOf(t.getDueDate().getTimeInMillis()));
+            initialValues.put("priority", t.getPriority());
+            if (t.isCompleted() == false)
+                initialValues.put("isCompleted", "false");
+            else
+                initialValues.put("isCompleted", true);
+            didSucceed = database.insert("list", null, initialValues) > 0;
         }
         catch (Exception e) {
             //Do nothing -will return false if there is an exception
@@ -79,28 +71,20 @@ public class ListDataSource {
         return didSucceed;
     }
 
-    public boolean updateContact(Contact c) {
+    public boolean updateTask(Task t) {
         boolean didSucceed = false;
         try {
-            Long rowId = (long) c.getContactID();
+            Long rowId = (long) t.getTaskID();
             ContentValues updateValues = new ContentValues();
-            if (c.getPicture() != null) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                c.getPicture().compress(Bitmap.CompressFormat.PNG, 100, baos);
-                byte[] photo = baos.toByteArray();
-                updateValues.put("contactphoto", photo);
-            }
-            updateValues.put("contactname", c.getContactName());
-            updateValues.put("streetaddress", c.getStreetAddress());
-            updateValues.put("city",c.getCity());
-            updateValues.put("state",c.getState());
-            updateValues.put("zipcode",c.getZipCode());
-            updateValues.put("phonenumber",c.getPhoneNumber());
-            updateValues.put("cellnumber",c.getCellNumber());
-            updateValues.put("email",c.geteMail());
-            updateValues.put("birthday",String.valueOf(c.getBirthday().getTimeInMillis()));
-
-            didSucceed = database.update("contact", updateValues, "_id=" + rowId, null) > 0;
+            updateValues.put("subject", t.getSubject());
+            updateValues.put("description", t.getDescription());
+            updateValues.put("dueDate", String.valueOf(t.getDueDate().getTimeInMillis()));
+            updateValues.put("priority", t.getPriority());
+            if (t.isCompleted() == false)
+                updateValues.put("isCompleted", "false");
+            else
+                updateValues.put("isCompleted", true);
+            didSucceed = database.update("list", updateValues, "taskID=" + rowId, null) > 0;
         }
         catch (Exception e) {
             //Do nothing -will return false if there is an exception
@@ -108,10 +92,10 @@ public class ListDataSource {
         return didSucceed;
     }
 
-    public int getLastContactID() {
+    public int getLastTaskID() {
         int lastId;
         try {
-            String query = "Select MAX(_id) from contact";
+            String query = "Select MAX(taskID) from list";
             Cursor cursor = database.rawQuery(query, null);
 
             cursor.moveToFirst();
@@ -124,62 +108,61 @@ public class ListDataSource {
         return lastId;
     }
 
-    public ArrayList<String> getContactName() {
-        ArrayList<String> contactNames = new ArrayList<>();
+    public ArrayList<String> getListSubject() {
+        ArrayList<String> listSubjects = new ArrayList<>();
         try {
-            String query = "Select contactname from contact";
+            String query = "Select subject from list";
             Cursor cursor = database.rawQuery(query, null);
 
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                contactNames.add(cursor.getString(0));
+                listSubjects.add(cursor.getString(0));
                 cursor.moveToNext();
             }
             cursor.close();
         }
         catch (Exception e) {
-            contactNames = new ArrayList<String>();
+            listSubjects = new ArrayList<String>();
         }
-        return contactNames;
+        return listSubjects;
     }
 
-    public ArrayList<Contact> getContacts(String sortField, String sortOrder) {
-        ArrayList<Contact> contacts = new ArrayList<Contact>();
+    public ArrayList<Task> getTasks(String sortField, String sortOrder) {
+        ArrayList<Task> tasks = new ArrayList<Task>();
         try {
-            String query = "Select * FROM contact ORDER BY " + sortField + " " + sortOrder;
+            String query = "Select * FROM list ORDER BY " + sortField + " " + sortOrder;
             Cursor cursor = database.rawQuery(query, null);
 
-            Contact newContact;
+            Task newTask;
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                newContact = new Contact();
-                newContact.setContactID(cursor.getInt(0));
-                newContact.setContactName(cursor.getString(1));
-                newContact.setStreetAddress(cursor.getString(2));
-                newContact.setCity(cursor.getString(3));
-                newContact.setState(cursor.getString(4));
-                newContact.setZipCode(cursor.getString(5));
-                newContact.setPhoneNumber(cursor.getString(6));
-                newContact.setCellNumber(cursor.getString(7));
-                newContact.seteMail(cursor.getString(8));
+                newTask = new Task();
+                newTask.setTaskID(cursor.getInt(0));
+                newTask.setSubject(cursor.getString(1));
+                newTask.setDescription(cursor.getString(2));
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(Long.valueOf(cursor.getString(9)));
-                newContact.setBirthday(calendar);
-                contacts.add(newContact);
+                calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
+                newTask.setDueDate(calendar);
+                newTask.setPriority(cursor.getString(4));
+                if(cursor.getString(5) == "false")
+                    newTask.setCompleted(false);
+                else
+                    newTask.setCompleted(true);
+                tasks.add(newTask);
                 cursor.moveToNext();
             }
             cursor.close();
         }
         catch (Exception e) {
-            contacts = new ArrayList<Contact>();
+            tasks = new ArrayList<Task>();
         }
-        return contacts;
+        return tasks;
     }
 
-    public boolean deleteContact(int contactID) {
+    public boolean deleteTask(int taskID) {
         boolean didDelete = false;
         try {
-            didDelete = database.delete("contact","_id=" + contactID, null) > 0;
+            didDelete = database.delete("list","taskID=" + taskID, null) > 0;
         }
         catch (Exception e) {
             //Do nothing -return value already set to false

@@ -12,7 +12,7 @@ public class ListDBHelper extends SQLiteOpenHelper {
 
     //Database creation of sql statement
     private static final String CREATE_TABLE_LIST =
-            "create table contact (taskID integer primary key autoincrement, "
+            "create table list (taskID integer primary key autoincrement, "
                     + "subject text not null, description text, "
                     + "dueDate text, priority text, isCompleted text);";
 
