@@ -2,6 +2,7 @@ package sunny.todolist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.Image;
@@ -25,7 +26,13 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements PickDateDialog.SaveDateListener {
 
     Task currentTask;
-test
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
