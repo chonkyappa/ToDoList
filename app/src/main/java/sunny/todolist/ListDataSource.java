@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -129,8 +130,14 @@ public class ListDataSource {
 
     public ArrayList<Task> getTasks(String sortField, String sortOrder) {
         ArrayList<Task> tasks = new ArrayList<Task>();
+        String query;
         try {
-            String query = "Select * FROM list ORDER BY " + sortField + " " + sortOrder;
+            if (sortField.equals("priority")) {
+                query = "SELECT * FROM list ORDER BY CASE priority WHEN 'Low' THEN 1 WHEN 'Medium' THEN 2 WHEN 'High' THEN 3 ELSE 4 END " + sortOrder;
+            }
+            else {
+                query = "Select * FROM list ORDER BY " + sortField + " " + sortOrder;
+            }
             Cursor cursor = database.rawQuery(query, null);
 
             Task newTask;
