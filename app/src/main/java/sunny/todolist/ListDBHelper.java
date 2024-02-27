@@ -8,13 +8,13 @@ import android.util.Log;
 public class ListDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "mylist.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     //Database creation of sql statement
     private static final String CREATE_TABLE_LIST =
             "create table list (taskID integer primary key autoincrement, "
-                    + "subject text not null, description text, "
-                    + "dueDate text, priority text, isCompleted integer);";
+                    + "subject text not null, description text not null, "
+                    + "dueDate text not null, priority text not null, isCompleted integer);";
 
     public ListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

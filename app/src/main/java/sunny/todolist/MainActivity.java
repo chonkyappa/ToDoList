@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.Calendar;
@@ -32,15 +33,53 @@ public class MainActivity extends AppCompatActivity implements PickDateDialog.Sa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        currentTask = new Task();
         initToggleButton();
-        setForEditing(false);
         initSettingsButton();
         initListButton();
         initPickDateButton();
         initTextChangedEvents();
         initSaveButton();
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            initTask(extras.getInt("taskID"));
+        } else {
+            currentTask = new Task();
+        }
+        setForEditing(false);
+    }
+
+    private void initTask(int taskID) {
+        ListDataSource ds = new ListDataSource(this);
+
+        try {
+            ds.open();
+            currentTask = ds.getSpecificTask(taskID);
+            ds.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        EditText etSubject = findViewById(R.id.editTextSubject);
+        EditText etDescription = findViewById(R.id.editTextDescription);
+        TextView tvDueDate = findViewById(R.id.textViewDueDate);
+        etSubject.setText(currentTask.getSubject());
+        etDescription.setText(currentTask.getDescription());
+        tvDueDate.setText(DateFormat.format("MM/dd/yyyy", currentTask.getDueDate()));
+
+        String priority = currentTask.getPriority();
+        RadioButton rbLow = findViewById(R.id.radioButtonLow);
+        RadioButton rbMedium = findViewById(R.id.radioButtonMedium);
+        RadioButton rbHigh = findViewById(R.id.radioButtonHigh);
+
+        if (priority.equalsIgnoreCase("low")) {
+            rbLow.setChecked(true);
+        } else if (priority.equalsIgnoreCase("medium")) {
+            rbMedium.setChecked(true);
+        } else {
+            rbHigh.setChecked(true);
+        }
     }
 
     private void initToggleButton() {
@@ -170,6 +209,8 @@ public class MainActivity extends AppCompatActivity implements PickDateDialog.Sa
                 {
                     currentTask.setPriority(etPriority.getText().toString());
                 }
+
+
             }
         });
     }
@@ -185,13 +226,12 @@ public class MainActivity extends AppCompatActivity implements PickDateDialog.Sa
                 try {
                     ds.open();
 
-                    if (currentTask.getTaskID() == -1 ) {
+                    if (currentTask.getTaskID() == -1) {
                         wasSuccessful = ds.insertTask(currentTask);
                     }
                     if (wasSuccessful) {
                         int newId = ds.getLastTaskID();
                         currentTask.setTaskID(newId);
-
                     }
                     else {
                         wasSuccessful = ds.updateTask(currentTask);
@@ -206,6 +246,8 @@ public class MainActivity extends AppCompatActivity implements PickDateDialog.Sa
                     ToggleButton editToggle = findViewById(R.id.toggleButtonEdit);
                     editToggle.toggle();
                     setForEditing(false);
+                } else {
+                    Toast.makeText(MainActivity.this, "All fields must be populated before saving!", Toast.LENGTH_LONG).show();
                 }
             }
         });

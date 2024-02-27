@@ -24,7 +24,7 @@ public class ListDataSource {
 
     public Task getSpecificTask(int taskID) {
         Task task = new Task();
-        String query = "SELECT * FROM contact WHERE taskID =" + taskID;
+        String query = "SELECT * FROM list WHERE taskID =" + taskID;
         Cursor cursor = database.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             task.setTaskID(cursor.getInt(0));

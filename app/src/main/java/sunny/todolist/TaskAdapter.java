@@ -120,6 +120,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
                     ListDataSource ds = new ListDataSource(parentContext);
                     ds.open();
                     ds.updateTask(taskData.get(position));
+                    ds.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

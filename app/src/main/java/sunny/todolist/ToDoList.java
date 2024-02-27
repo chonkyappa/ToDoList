@@ -28,7 +28,8 @@ public class ToDoList extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             int taskID = tasks.get(position).getTaskID();
             Intent intent = new Intent(ToDoList.this, MainActivity.class);
-            intent.putExtra("contactID", taskID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("taskID", taskID);
             startActivity(intent);
         }
     };
