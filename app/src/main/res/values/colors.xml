@@ -9,4 +9,5 @@
     <color name="background_main_activity">#f5f3f5</color>
     <color name="toggle_button">#dae3e5</color>
     <color name="system_red">#FF0000</color>
+    <color name="grey">#808080</color>
 </resources>

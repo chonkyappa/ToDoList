@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ public class TaskAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Task> taskData;
     private View.OnClickListener mOnItemClickListener;
+    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
+
     private boolean isDeleting;
     private Context parentContext;
 
@@ -27,6 +32,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
         public TextView taskDueDate;
         public TextView taskPriority;
         public Button deleteButton;
+        public CheckBox checkBox;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -35,6 +41,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
             taskDueDate = itemView.findViewById(R.id.textDueDate);
             taskPriority = itemView.findViewById(R.id.textPriority);
             deleteButton = itemView.findViewById(R.id.buttonDeleteTask);
+            checkBox = itemView.findViewById(R.id.checkBox);
 
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);
@@ -55,6 +62,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
         public Button getDeleteButton() {
             return deleteButton;
         }
+        public CheckBox getCheckBox() { return checkBox; }
     }
 
     public TaskAdapter(ArrayList<Task> taskData, Context context) {
@@ -65,6 +73,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
     public void setOnItemClickListener(View.OnClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -91,6 +100,33 @@ public class TaskAdapter extends RecyclerView.Adapter {
         } else {
             tvh.getDeleteButton().setVisibility(View.INVISIBLE);
         }
+
+        tvh.getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tvh.getTaskSubject().setTextColor(ContextCompat.getColor(parentContext, R.color.grey));
+                    tvh.getTaskPriority().setTextColor(ContextCompat.getColor(parentContext, R.color.grey));
+                    tvh.getTaskDueDate().setTextColor(ContextCompat.getColor(parentContext, R.color.grey));
+
+                } else {
+                    tvh.getTaskSubject().setTextColor(ContextCompat.getColor(parentContext, R.color.blue_theme));
+                    tvh.getTaskPriority().setTextColor(ContextCompat.getColor(parentContext, R.color.navbar_background));
+                    tvh.getTaskDueDate().setTextColor(ContextCompat.getColor(parentContext, R.color.navbar_background));
+                }
+                taskData.get(position).setCompleted(isChecked);
+                try {
+                    ListDataSource ds = new ListDataSource(parentContext);
+                    ds.open();
+                    ds.updateTask(taskData.get(position));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tvh.getCheckBox().setChecked(taskData.get(position).isCompleted());
+
     }
 
     private void deleteItem(int position) {
@@ -114,6 +150,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
         }
 
     }
+
 
     public void setDelete(boolean b) {
         isDeleting = b;

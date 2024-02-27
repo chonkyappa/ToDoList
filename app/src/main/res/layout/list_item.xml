@@ -13,8 +13,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="@color/blue_theme"
         android:textSize="@dimen/text_size_medium"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Due By:"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toBottomOf="@+id/textSubject" />
 
     <TextView
@@ -36,8 +37,9 @@
         android:layout_marginBottom="8dp"
         android:text="Priority:"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDueBy" />
+        app:layout_constraintStart_toEndOf="@id/checkBox"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDueBy"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textPriority"
@@ -47,6 +49,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
+        android:textColor="@color/navbar_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewPriority"
         app:layout_constraintTop_toBottomOf="@+id/textDueDate" />
@@ -57,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textColor="@color/navbar_background"
         app:layout_constraintBaseline_toBaselineOf="@id/textViewDueBy"
         app:layout_constraintStart_toEndOf="@+id/textViewDueBy"
         app:layout_constraintTop_toBottomOf="@id/textSubject" />
@@ -73,5 +77,14 @@
         android:textColor="@color/system_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

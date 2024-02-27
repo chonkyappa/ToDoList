@@ -61,7 +61,7 @@ public class ListDataSource {
             initialValues.put("dueDate", String.valueOf(t.getDueDate().getTimeInMillis()));
             initialValues.put("priority", t.getPriority());
             if (t.isCompleted() == false)
-                initialValues.put("isCompleted", "false");
+                initialValues.put("isCompleted", false);
             else
                 initialValues.put("isCompleted", true);
             didSucceed = database.insert("list", null, initialValues) > 0;
@@ -82,7 +82,7 @@ public class ListDataSource {
             updateValues.put("dueDate", String.valueOf(t.getDueDate().getTimeInMillis()));
             updateValues.put("priority", t.getPriority());
             if (t.isCompleted() == false)
-                updateValues.put("isCompleted", "false");
+                updateValues.put("isCompleted", false);
             else
                 updateValues.put("isCompleted", true);
             didSucceed = database.update("list", updateValues, "taskID=" + rowId, null) > 0;
