@@ -8,7 +8,7 @@ import android.util.Log;
 public class ListDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "mylist.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //Database creation of sql statement
     private static final String CREATE_TABLE_LIST =
