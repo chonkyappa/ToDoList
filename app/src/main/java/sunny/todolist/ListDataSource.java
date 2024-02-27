@@ -34,10 +34,7 @@ public class ListDataSource {
             calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
             task.setDueDate(calendar);
             task.setPriority(cursor.getString(4));
-            if(cursor.getString(5) == "false")
-                task.setCompleted(false);
-            else
-                task.setCompleted(true);
+            task.setCompleted(cursor.getInt(5));
 
             cursor.close();
         }
@@ -60,10 +57,7 @@ public class ListDataSource {
             initialValues.put("description", t.getDescription());
             initialValues.put("dueDate", String.valueOf(t.getDueDate().getTimeInMillis()));
             initialValues.put("priority", t.getPriority());
-            if (t.isCompleted() == false)
-                initialValues.put("isCompleted", false);
-            else
-                initialValues.put("isCompleted", true);
+            initialValues.put("isCompleted", t.isCompleted());
             didSucceed = database.insert("list", null, initialValues) > 0;
         }
         catch (Exception e) {
@@ -81,10 +75,7 @@ public class ListDataSource {
             updateValues.put("description", t.getDescription());
             updateValues.put("dueDate", String.valueOf(t.getDueDate().getTimeInMillis()));
             updateValues.put("priority", t.getPriority());
-            if (t.isCompleted() == false)
-                updateValues.put("isCompleted", false);
-            else
-                updateValues.put("isCompleted", true);
+            updateValues.put("isCompleted", t.isCompleted());
             didSucceed = database.update("list", updateValues, "taskID=" + rowId, null) > 0;
         }
         catch (Exception e) {
@@ -151,10 +142,7 @@ public class ListDataSource {
                 calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
                 newTask.setDueDate(calendar);
                 newTask.setPriority(cursor.getString(4));
-                if(cursor.getString(5) == "false")
-                    newTask.setCompleted(false);
-                else
-                    newTask.setCompleted(true);
+                newTask.setCompleted(cursor.getInt(5));
                 tasks.add(newTask);
                 cursor.moveToNext();
             }

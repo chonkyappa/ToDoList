@@ -9,7 +9,7 @@ public class Task {
     private String description;
     private Calendar dueDate;
     private String priority;
-    private boolean isCompleted;
+    private int isCompleted;
 
     public Task() {
         taskID = -1; // used to determine if task already exists
@@ -56,11 +56,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public boolean isCompleted() {
+    public int isCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
+    public void setCompleted(int isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

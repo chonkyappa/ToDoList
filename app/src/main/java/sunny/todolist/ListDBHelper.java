@@ -14,7 +14,7 @@ public class ListDBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_LIST =
             "create table list (taskID integer primary key autoincrement, "
                     + "subject text not null, description text, "
-                    + "dueDate text, priority text, isCompleted boolean default false);";
+                    + "dueDate text, priority text, isCompleted integer);";
 
     public ListDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

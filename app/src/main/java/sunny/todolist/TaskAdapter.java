@@ -108,13 +108,14 @@ public class TaskAdapter extends RecyclerView.Adapter {
                     tvh.getTaskSubject().setTextColor(ContextCompat.getColor(parentContext, R.color.grey));
                     tvh.getTaskPriority().setTextColor(ContextCompat.getColor(parentContext, R.color.grey));
                     tvh.getTaskDueDate().setTextColor(ContextCompat.getColor(parentContext, R.color.grey));
-
+                    taskData.get(position).setCompleted(1);
                 } else {
                     tvh.getTaskSubject().setTextColor(ContextCompat.getColor(parentContext, R.color.blue_theme));
                     tvh.getTaskPriority().setTextColor(ContextCompat.getColor(parentContext, R.color.navbar_background));
                     tvh.getTaskDueDate().setTextColor(ContextCompat.getColor(parentContext, R.color.navbar_background));
+                    taskData.get(position).setCompleted(0);
                 }
-                taskData.get(position).setCompleted(isChecked);
+
                 try {
                     ListDataSource ds = new ListDataSource(parentContext);
                     ds.open();
@@ -125,7 +126,7 @@ public class TaskAdapter extends RecyclerView.Adapter {
             }
         });
 
-        tvh.getCheckBox().setChecked(taskData.get(position).isCompleted());
+        tvh.getCheckBox().setChecked(taskData.get(position).isCompleted() == 1);
 
     }
 
